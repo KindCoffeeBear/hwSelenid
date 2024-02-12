@@ -20,6 +20,6 @@ public class CallbackTest {
         form.$("[data-test-id='phone'] input").setValue("+79994322334");
         form.$("[data-test-id='agreement']").click();
         form.$(".button").click();
-        $("[data-test-id='notification'] .notification__title").shouldBe(visible, Duration.ofSeconds(15));
+        $("[data-test-id='notification'] .notification__title").shouldBe(visible, Duration.ofSeconds(5));
     }
 }
