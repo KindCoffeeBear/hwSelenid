@@ -29,7 +29,7 @@ public class CallbackTest {
         form.$("[data-test-id='phone'] input").setValue("+79994322334");
         form.$("[data-test-id='agreement']").click();
         form.$(".button").click();
-        $("[data-test-id='notification'] .notification__title").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(exactText("Успешно!"));
+        $("[data-test-id='notification'] .notification__content").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(exactText("Встреча успешно забронирована на " + planningDate));
     }
 
     @Test
@@ -39,20 +39,19 @@ public class CallbackTest {
         form.$("[data-test-id='city'] input").setValue("Кр");
         $$(".menu-item").find(exactText("Краснодар")).click();
         form.$("[data-test-id='date'] input").click();
-        int planningDay = 7;
-        String planningDate = generateDate(planningDay, "d");
+        int daysUntilMeetings = 7;
+        String planningDay = generateDate(daysUntilMeetings, "d");
+        String planningDate = generateDate(daysUntilMeetings, "dd.MM.yyyy");
 
-        if (generateDate(3, "MM").equals(generateDate(planningDay, "MM"))) {
-            $$(".calendar__day").find(exactText(planningDate)).click();
-        } else {
+        if (!generateDate(3, "MM").equals(generateDate(daysUntilMeetings, "MM"))) {
             $(".calendar__arrow_direction_right[data-step='1']").click();
-            $$(".calendar__day").find(exactText(planningDate)).click();
         }
 
+        $$(".calendar__day").find(exactText(planningDay)).click();
         form.$("[data-test-id='name'] input").setValue("Иванов Василий");
         form.$("[data-test-id='phone'] input").setValue("+79994322334");
         form.$("[data-test-id='agreement']").click();
         form.$(".button").click();
-        $("[data-test-id='notification'] .notification__title").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(exactText("Успешно!"));
+        $("[data-test-id='notification'] .notification__content").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(exactText("Встреча успешно забронирована на " + planningDate));
     }
 }
